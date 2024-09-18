@@ -15,8 +15,11 @@ router.post("/upload-file", upload.single('file'), async (req, res, next) => {
 });
 
 
-router.post("/upload-installment-files", upload.array('files',10),userLocInstallmentService.saveInstallmentDocs);
-router.post("/upload-single-installment-file", upload.single('file'),userLocInstallmentService.uploadInstallmentDoc);
-router.patch("/update-single-installment-file/:id", upload.single('file'),userLocInstallmentService.updateInstallmentDoc);
+const service = (req,res)=>{
+res.status(200).json({message : "OK"})
+}
+router.post("/upload-installment-files", upload.array('files',10),service);
+router.post("/upload-single-installment-file", upload.single('file'),service);
+router.patch("/update-single-installment-file/:id", upload.single('file'),service);
 
 module.exports = router;
