@@ -1,15 +1,6 @@
 const multer = require('multer');
 const path = require('path');
 
-module.exports.generateRandomString = (length = 8) => {
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    const randomDigit = Math.floor(Math.random() * 10);
-    result += randomDigit.toString();
-  }
-  return result;
-}
-
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {

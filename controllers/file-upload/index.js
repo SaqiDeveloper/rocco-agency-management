@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const path = require('path');
-const userLocInstallmentService = require("../../services/userLocInstallment");
 const {upload} = require('../../utils/helpers-functions.js');
 
 router.post("/upload-file", upload.single('file'), async (req, res, next) => {
