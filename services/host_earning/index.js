@@ -1,6 +1,6 @@
 const asyncErrorHandler = require("../../utils/asyncErrorHandler");
 const { STATUS_CODES, TEXTS } = require("../../config/constants");
-const { User } = require("../../models");
+const { User, Wallet } = require("../../models");
 
 const timeReward = (time, diamonds) => {
   let per = 0;
@@ -49,23 +49,44 @@ const getComission = (actualReceiving) => {
 };
 
 const setEarning = asyncErrorHandler(async (req, res) => {
-     let totalEarning = req.body.totalEarning; 
-     let time = req.body.time;
-     let timeDiamond = timeReward(time, totalEarning);
-     let giftCommision = getComission(totalEarning); 
+  let totalEarning = req.body.totalEarning;
+  let time = req.body.time;
+  let timeDiamond = timeReward(time, totalEarning);
+  let giftCommision = getComission(totalEarning);
 
-     let total  = totalEarning + giftCommision + timeDiamond 
+  let total = totalEarning + giftCommision + timeDiamond;
 
+  const [resp] = await Wallet.increment('rcoin', { by: total, where: { id: req?.query?.userId } })
+  const [[data], status] = resp;
 
-     res.status(200).json({
-        Total: totalEarning, 
-        timeReward: timeDiamond, 
-        updated: total
-     })
-});  
+  if(!status){
 
+    res.status(404).json({
+      statusCode: 404,
+      message: TEXTS.UPDATE_FAILED,
+      data: data,
+    });
 
+  }
+
+  res.status(STATUS_CODES.SUCCESS).json({
+    statusCode: STATUS_CODES.SUCCESS,
+    message: TEXTS.UPDATED,
+    data: data,
+  });
+});
+
+const testAPI = asyncErrorHandler(async (req, res) => {
+
+  const [resp] = await Wallet.increment('rcoin', { by: 3, where: { id: '2e62c452-8bb4-4c5e-886e-1c26519586c1' } })
+  const [[data], status] = resp;
+  console.log("status========>", status)
+  console.log("data========>", data)
+  res.status(200).json({ resp : data })
+
+});
 
 module.exports = {
-    setEarning
+  setEarning,
+  testAPI
 }
