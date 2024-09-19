@@ -21,8 +21,8 @@ app.get("/api/v1/test", (req, res) => {
   res.status(200).json({ message: "Server is working fine!" });
 });
 
-authenticate.unless = unless;
-app.use(authenticate.unless(authenticateRoutes));
+// authenticate.unless = unless;
+// app.use(authenticate.unless(authenticateRoutes));
 
 
 app.use("/api/v1", routes);

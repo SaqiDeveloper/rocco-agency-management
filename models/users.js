@@ -28,112 +28,109 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(199),
       allowNull: true,
     },
+    birth_day: {
+      type: DataTypes.STRING(199),
+      allowNull: true,
+    },
     phone: {
       type: DataTypes.STRING(50),
       allowNull: true,
     },
-    SSN: {
+    country: {
       type: DataTypes.STRING(50),
-      allowNull: true,
-    },
-    user_account_number: {
-      type: DataTypes.STRING(50),
-      allowNull: true,
-    },
-    dob: {
-      type: DataTypes.DATE,
       allowNull: true,
     },
     password: {
       type: DataTypes.STRING(199),
       allowNull: false,
     },
-    pin_code: {
+    longitude: {
+      type: DataTypes.STRING(199),
+      allowNull: true,
+    },
+    latitude: {
+      type: DataTypes.STRING(199),
+      allowNull: true,
+    },
+    biography: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    is_verified: {
-      type: DataTypes.BOOLEAN,
+    level: {
+      type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: false,
     },
-    is_subscribed: {
-      type: DataTypes.BOOLEAN,
+    frame: {
+      type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: false,
     },
     role: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+    },
+    gender: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 1,
     },
-    status: {
+    banned: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: true,
     },
-    id_front_pic: {
+    verified: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    id_back_pic: {
+    agencyId: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    user_image: {
+    resellerId: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    otp: {
-      type: DataTypes.INTEGER,
+    user_name: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
-    is_docs_verified: {
+    businessDeveloperId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
     },
-    verification_desc: {
+    moderationId: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: ""
     },
-    device_token: {
-      type: DataTypes.STRING,
+    official: {
+      type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: ""
     },
-    my_referel_code: {
+    isSuperAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: ""
+    },
+    pushNotificationToken: {
       type: DataTypes.STRING,
-      defaultValue: () => {
-        const timestamp = Date.now().toString();
-        return 'REF-' + timestamp.slice(-8);
-      },
+      allowNull: true,
+    
     },
-    by_referel: {
+    stripeCustomerId: {
       type: DataTypes.STRING,
-      defaultValue: null
-    },
-    createdAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
-    updatedAt: {
-      allowNull: false,
-      type: DataTypes.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-    },
+      allowNull: true,
+    
+    }
   }, {
     sequelize,
     modelName: "User",
     tableName: "users",
     timestamps: true,
-    hooks: {
-      beforeUpdate: (user, options) => {
-        user.updatedAt = Sequelize.literal('CURRENT_TIMESTAMP');
-      }
-    },
   });
 
   return User;
